@@ -1,6 +1,6 @@
 ---
 name: platform
-version: 1.0.0
+version: 1.1.0
 ---
 # Vrixel platform constitution
 
@@ -17,3 +17,4 @@ Precedence: platform constitution, then product constitution, then ADRs, then PR
 - **VX-8** Every service ships with SLOs, structured logs and traces. (Policy)
 - **VX-9** User-facing UI meets WCAG 2.1 AA. (Test, Rubric)
 - **VX-10** Stay within the per-feature budget; escalate rather than overspend. (Policy)
+- **VX-11** Every repository keeps unit-test line coverage at or above 90%, measured on every pull request; a change that drops it below 90% does not merge. (Test)
