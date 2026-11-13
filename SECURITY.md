@@ -19,6 +19,6 @@ acknowledge reports within two business days.
 
 ## How changes are made
 
-Pull requests only, reviewed by the code owners in `CODEOWNERS`. The Vrixel agentic SDLC tool
+Pull requests only, reviewed by the code owners in `CODEOWNERS`. The Valxel agentic SDLC tool
 reads this repository and opens pull requests to it (new repos, architecture decisions, roadmap
 records, postmortems); people approve them.
