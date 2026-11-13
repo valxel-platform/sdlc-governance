@@ -1,7 +1,7 @@
 # The alert rules every backend component gets, as OpenChoreo `observability-alert-rule` traits
 # that feed the incident flow.
 #
-# The Vrixel SDLC adds them to each component before its first deployment, and adds any that are
+# The Valxel SDLC adds them to each component before its first deployment, and adds any that are
 # missing later; it never removes or changes a rule someone tuned. OpenChoreo evaluates them in
 # every environment and notifies the environment's default notification channel, which the platform
 # points at the SDLC tool (/api/signals/openchoreo): in production a firing rule opens an incident,

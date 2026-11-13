@@ -2,7 +2,7 @@
 name: platform
 version: 1.7.0
 ---
-# Vrixel platform constitution
+# Valxel platform constitution
 
 Applies to every product. Product constitutions may tighten these articles, never loosen them.
 Precedence: platform constitution, then product constitution, then ADRs, then PRD and task instructions.
