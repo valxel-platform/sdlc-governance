@@ -22,3 +22,7 @@ Changes are pull requests approved by the platform owner (see CODEOWNERS).
   data classes and regions allowed, the IAM actions behind each access, sizes with planning costs,
   and the emulator for tests. Each type has a Crossplane Composition in
   `valxel-platform/platform-resources`; adding one is a pull request in both.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
