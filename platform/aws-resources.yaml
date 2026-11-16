@@ -220,6 +220,20 @@ types:
       consumers-behind: { metric: EstimatedMaxTimeLag, statistic: Maximum, period_s: 300, periods: 3, above: 300, severity: sev2, says: "A consumer group is over five minutes behind on this topic; what it keeps (a store, an index, a report) is stale." }
     emulator: "Kafka in Testcontainers (the templates' KafkaContainer)"
 
+  kafka-user:
+    internal: true
+    service: "One component's Kafka identity: IAM through its workload identity (MSK), a SCRAM user (Strimzi)"
+    use_for: "Signing a component in to the environment's Kafka; what it may do is only what each kafka-topic grants."
+    data_classes: [general, payments, phi]
+    stateful: false
+    parameters:
+      component: { type: string, required: true }
+    access: {}
+    outputs: { username: KAFKA_USERNAME, secret: KAFKA_SECRET }
+    sizes:
+      small: { monthly_usd: 0 }
+    built_in: [a password only in the component's own namespace (Strimzi), no keys at all (MSK)]
+
   workload-identity:
     internal: true
     service: "IAM role with EKS Pod Identity"
