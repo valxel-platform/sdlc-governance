@@ -44,6 +44,13 @@ analysis:
 # this is suspended for that product until its record improves.
 calibration: { window_days: 90, min_samples: 5, suspend_below: 0.6 }
 
+# Shadow mode: before the tool acts alone at all, triage earns it. Where the tool would have turned
+# a flag off or rolled back by itself, it records that and pages on-call instead. A shadow choice
+# agreed when the incident recovered after on-call took that same action. The tool acts alone once
+# at least min_samples choices in window_days, across all products, agreed agree_at_least of the
+# time. Each triage is also an eval case, so a config change that makes it pick worse fails its PR.
+shadow: { min_samples: 10, agree_at_least: 0.8, window_days: 90 }
+
 # Gradual releases: G6 approves this plan. The tool turns the feature's flag on for this share of
 # users, waits (by the feature's risk tier), and steps up while nothing fails; an incident on its
 # components holds it, and the flag going off (the tool's or on-call's flag off) stops it.
