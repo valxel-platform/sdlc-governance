@@ -26,6 +26,12 @@ attempts: 1
 require_agreement: true
 without_analysis: page    # or: suspects (act on the release suspect alone)
 
+# And at least two independent senders (Prometheus, CloudWatch, OpenChoreo, error tracking, a
+# ticket...) must report the incident: one alert source, or one leaked signals token, can't make the
+# tool act alone. It waits this long for the second, then pages on-call. A product may ask for more.
+min_sources: 2
+corroboration_minutes: { sev1: 5, sev2: 10, sev3: 15, sev4: 15 }
+
 # OpenChoreo's agents send the product's telemetry to an AI provider: the one the observability
 # plane's agents are configured with. They run only for data classes that may go to that provider
 # (the tool's data_classes setting in config/models.yaml) and never for data that must stay in an
