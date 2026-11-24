@@ -18,10 +18,12 @@ Changes are pull requests approved by the platform owner (see CODEOWNERS).
   its track record bar; how long it must then stay quiet and who is paged when; and the gradual
   release plan G6 approves (5%, 25%, 50%, 100%). Products can narrow it or turn parts off in
   product.yaml `runtime.remediation`.
-- `platform/aws-resources.yaml`: the AWS services products may use (VX-19), what each is for, the
-  data classes and regions allowed, the IAM actions behind each access, sizes with planning costs,
-  and the emulator for tests. Each type has a Crossplane Composition in
-  `valxel-platform/platform-resources`; adding one is a pull request in both.
+- `platform/catalog.yaml`: the managed services products may use (VX-19), by neutral type
+  (key-value-table, queue...) with a block per cloud (AWS, Google Cloud): what each is for, the
+  data classes and regions allowed, the access behind each verb, sizes with planning costs, its
+  alarms and the emulator for tests. The version 1 AWS names still read as aliases. Each type has a
+  Crossplane Composition per cloud in `valxel-platform/platform-resources`; adding one is a pull
+  request in both.
 
 ## License
 
