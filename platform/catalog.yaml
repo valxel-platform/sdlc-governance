@@ -574,17 +574,9 @@ types:
     access_by: credentials
     outputs: { host: DB_HOST, port: DB_PORT, database: DB_NAME, username: DB_USER, password: DB_PASSWORD, tokenize_key: TOKENIZE_KEY }
     clouds:
-      aws:
-        service: "A PostgreSQL role made with provider-sql in the product's RDS database"
-        access: {}
-        # The database is OpenChoreo's postgres-crossplane, which doesn't make the <database>-sql-admin
-        # ProviderConfig yet: to add and check on a real AWS data plane (tracker CP-127) before a
-        # transform deploys there.
-        available: false
-        sizes:
-          small: { monthly_usd: 0 }
-        built_in: [no superuser, createdb, createrole, replication or bypassrls, column-level SELECT only, a password made by the provider]
-        alarms: {}
+      # No aws block yet: the database there is OpenChoreo's postgres-crossplane, which doesn't make
+      # the <database>-sql-admin ProviderConfig. To add and check on a real AWS data plane (tracker
+      # CP-127); until then a design with a Postgres transform on AWS fails G4.
       gcp:
         service: "A PostgreSQL role made with provider-sql in the product's Cloud SQL database"
         access: {}
