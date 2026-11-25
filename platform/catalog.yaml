@@ -556,9 +556,9 @@ types:
   # A login of its own in a product database, for one component: a transform. Not chosen in
   # designs: the SDLC tool makes one per transform when it deploys, from the approved design (the
   # tables and columns it may read come from the data contracts its Pipelines line reads), and binds
-  # it with the component. provider-sql builds it inside the database with the database's admin
-  # credentials (`admin_secret`: the postgres resource's Secret and its keys, per cloud), which the
-  # component never sees. It gets its own login's credentials and a tokenize key of its own.
+  # it with the component. provider-sql builds it inside the database through the ProviderConfig the
+  # database's own Composition makes (<database>-sql-admin), so the admin credentials never leave it
+  # and the component never sees them. It gets its own login's credentials and a tokenize key.
   postgres-login:
     internal: true
     use_for: "A transform's own login: SELECT on exactly the columns its contracts give it, its own schemas, nothing else."
@@ -568,20 +568,19 @@ types:
     parameters:
       database: { type: string, required: true }
       login: { type: string, required: true }
-      adminSecret: { type: object, required: true }
       reads: { type: array }
       createSchemas: { type: boolean, default: false }
       breakGlass: { type: boolean, default: false }
-      sslMode: { type: string, default: require }
     access_by: credentials
     outputs: { host: DB_HOST, port: DB_PORT, database: DB_NAME, username: DB_USER, password: DB_PASSWORD, tokenize_key: TOKENIZE_KEY }
     clouds:
       aws:
         service: "A PostgreSQL role made with provider-sql in the product's RDS database"
         access: {}
-        # OpenChoreo's postgres-crossplane writes the database's admin Secret; its name and keys
-        # are to be checked on a real AWS data plane (tracker CP-127) before a transform deploys there.
-        admin_secret: { name: "{resource}-postgres", keys: { endpoint: endpoint, port: port, username: username, password: password }, verified: false }
+        # The database is OpenChoreo's postgres-crossplane, which doesn't make the <database>-sql-admin
+        # ProviderConfig yet: to add and check on a real AWS data plane (tracker CP-127) before a
+        # transform deploys there.
+        available: false
         sizes:
           small: { monthly_usd: 0 }
         built_in: [no superuser, createdb, createrole, replication or bypassrls, column-level SELECT only, a password made by the provider]
@@ -589,7 +588,6 @@ types:
       gcp:
         service: "A PostgreSQL role made with provider-sql in the product's Cloud SQL database"
         access: {}
-        admin_secret: { name: "{resource}-postgres", keys: { endpoint: endpoint, port: port, username: username, password: password }, verified: true }
         sizes:
           small: { monthly_usd: 0 }
         built_in: [no superuser, createdb, createrole, replication or bypassrls, column-level SELECT only, a password made by the provider]
@@ -597,7 +595,6 @@ types:
       azure:
         service: "A PostgreSQL role made with provider-sql in the product's flexible server database"
         access: {}
-        admin_secret: { name: "{resource}-postgres", keys: { endpoint: endpoint, port: port, username: username, password: password }, verified: true }
         sizes:
           small: { monthly_usd: 0 }
         built_in: [no superuser, createdb, createrole, replication or bypassrls, column-level SELECT only, a password made by the provider]
